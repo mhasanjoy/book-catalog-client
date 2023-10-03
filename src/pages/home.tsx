@@ -5,7 +5,7 @@ const Home = () => {
   const { toast } = useToast();
 
   return (
-    <>
+    <div className="min-h-[calc(100vh-6rem)]">
       <h1>Home</h1>
       <Button
         variant="outline"
@@ -17,7 +17,7 @@ const Home = () => {
       >
         Show Toast
       </Button>
-    </>
+    </div>
   );
 };
 
