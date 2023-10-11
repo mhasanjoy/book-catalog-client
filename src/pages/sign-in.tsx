@@ -1,16 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
 import { loginUser } from "@/redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/types";
 import { Mail } from "lucide-react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { user, isLoading, isError, error } = useAppSelector((state) => state.user);
+  const { user, isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const { toast } = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,22 +26,17 @@ const SignIn = () => {
         password: target.password.value,
       })
     );
-
-    if (user.email) {
-      navigate(-1);
-      toast({
-        description: "User signed in successfully!",
-      });
-    } else if (isError) {
-      toast({
-        description: error,
-      });
-    }
   };
+
+  useEffect(() => {
+    if (user.email && !isLoading) {
+      navigate("/");
+    }
+  }, [user.email, isLoading, navigate]);
 
   return (
     <div className="min-h-[calc(100vh-6rem)] flex justify-center items-center">
-      <form onSubmit={handleSubmit} className="min-w-[30%]">
+      <form onSubmit={handleSubmit} className="min-w-[30%] my-10">
         <div className="flex flex-col space-y-2 text-center mb-10">
           <h1 className="text-2xl font-semibold tracking-tight">Sign in to your account</h1>
           <p className="text-sm text-muted-foreground">Enter your email below</p>
