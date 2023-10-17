@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { loginUser } from "@/redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/types";
+import { useAppSelector, useAppThunkDispatch } from "@/redux/types";
 import { Mail } from "lucide-react";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const { user, isLoading } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.user);
+  const dispatch = useAppThunkDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const { state } = useLocation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,14 +27,28 @@ const SignIn = () => {
         email: target.email.value,
         password: target.password.value,
       })
-    );
+    )
+      .unwrap()
+      .then(() => {
+        if (state?.path) {
+          navigate(state.path);
+        } else {
+          navigate("/");
+        }
+        toast({
+          variant: "default",
+          description: "User signed in successfully!",
+        });
+        target.email.value = "";
+        target.password.value = "";
+      })
+      .catch((error) => {
+        toast({
+          variant: "destructive",
+          description: error.message,
+        });
+      });
   };
-
-  useEffect(() => {
-    if (user.email && !isLoading) {
-      navigate("/");
-    }
-  }, [user.email, isLoading, navigate]);
 
   return (
     <div className="min-h-[calc(100vh-6rem)] flex justify-center items-center">

@@ -22,7 +22,7 @@ const Header = () => {
       .catch((error) => {
         toast({
           variant: "destructive",
-          description: error,
+          description: error.message,
         });
       });
   };
@@ -38,17 +38,17 @@ const Header = () => {
           </li>
           <li>
             <Button variant="link" asChild>
-              <Link to="/all-books">All Books</Link>
+              <Link to="/books">All Books</Link>
+            </Button>
+          </li>
+          <li>
+            <Button variant="link" asChild>
+              <Link to="/add-new-book">Add New Book</Link>
             </Button>
           </li>
 
           {user.email ? (
             <>
-              <li>
-                <Button variant="link" asChild>
-                  <Link to="/add-new-book">Add New Book</Link>
-                </Button>
-              </li>
               <li>
                 <Button variant="link" onClick={handleSignOut}>
                   Sign Out

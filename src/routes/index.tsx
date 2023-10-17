@@ -1,4 +1,5 @@
 import AddNewBook from "@/pages/add-new-book";
+import Books from "@/pages/books";
 import Home from "@/pages/home";
 import SignIn from "@/pages/sign-in";
 import SignUp from "@/pages/sign-up";
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/sign-in",
         element: <SignIn />,
+      },
+      {
+        path: "/books",
+        element: <Books />,
       },
       {
         path: "/add-new-book",

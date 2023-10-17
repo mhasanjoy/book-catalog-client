@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { useAddNewBookMutation } from "@/redux/features/book/bookApi";
 import { useAppSelector } from "@/redux/types";
 import { IBook } from "@/types/book";
 
 const AddNewBook = () => {
   const { user } = useAppSelector((state) => state.user);
-
   const [addNewBook, { isLoading }] = useAddNewBookMutation();
+  const { toast } = useToast();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,7 +31,24 @@ const AddNewBook = () => {
       },
     };
 
-    addNewBook(options);
+    addNewBook(options)
+      .unwrap()
+      .then(() => {
+        toast({
+          variant: "default",
+          description: "Book added successfully!",
+        });
+        target.title.value = "";
+        target.author.value = "";
+        target.genre.value = "";
+        target.publicationDate.value = "";
+      })
+      .catch((error) =>
+        toast({
+          variant: "destructive",
+          description: error.error,
+        })
+      );
   };
 
   return (

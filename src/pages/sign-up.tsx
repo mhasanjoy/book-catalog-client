@@ -1,16 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { createUser } from "@/redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/types";
+import { useAppSelector, useAppThunkDispatch } from "@/redux/types";
 import { Mail } from "lucide-react";
-import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { user, isLoading } = useAppSelector((state) => state.user);
-  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.user);
+  const dispatch = useAppThunkDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,14 +26,24 @@ const SignUp = () => {
         email: target.email.value,
         password: target.password.value,
       })
-    );
+    )
+      .unwrap()
+      .then(() => {
+        navigate("/");
+        toast({
+          variant: "default",
+          description: "User created successfully!",
+        });
+        target.email.value = "";
+        target.password.value = "";
+      })
+      .catch((error) =>
+        toast({
+          variant: "destructive",
+          description: error.message,
+        })
+      );
   };
-
-  useEffect(() => {
-    if (user.email && !isLoading) {
-      navigate("/");
-    }
-  }, [user.email, isLoading, navigate]);
 
   return (
     <>
