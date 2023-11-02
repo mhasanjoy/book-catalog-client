@@ -3,7 +3,9 @@ import { api } from "@/redux/api/apiSlice";
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: () => "/books",
+      query: ({ search }) => {
+        return { url: "/books", params: { search } };
+      },
     }),
     getTenRecentlyAddedBooks: builder.query({
       query: () => "/recently-added-books",
@@ -36,6 +38,7 @@ const bookApi = api.injectEndpoints({
 
 export const {
   useGetBooksQuery,
+  useLazyGetBooksQuery,
   useGetTenRecentlyAddedBooksQuery,
   useGetSingleBookQuery,
   useAddNewBookMutation,
