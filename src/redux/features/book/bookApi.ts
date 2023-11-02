@@ -37,7 +37,6 @@ const bookApi = api.injectEndpoints({
 });
 
 export const {
-  useGetBooksQuery,
   useLazyGetBooksQuery,
   useGetTenRecentlyAddedBooksQuery,
   useGetSingleBookQuery,
