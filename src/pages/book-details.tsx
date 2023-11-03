@@ -1,12 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetSingleBookQuery } from "@/redux/features/book/bookApi";
-import { useParams } from "react-router-dom";
+import { useAppSelector } from "@/redux/types";
+import { IBook } from "@/types/book";
+import { useNavigate, useParams } from "react-router-dom";
 
 const BookDetails = () => {
   const { id } = useParams();
 
   const { data, isLoading } = useGetSingleBookQuery(id);
+
+  const { user } = useAppSelector((state) => state.user);
+
+  const navigate = useNavigate();
+  const handleEdit = (book: IBook) => {
+    navigate(`/books/${book._id}/edit-book`);
+  };
 
   if (isLoading) {
     return (
@@ -30,7 +39,9 @@ const BookDetails = () => {
             <p>Publication Date: {data.publicationDate}</p>
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Button variant="outline">Edit</Button>
+            <Button variant="outline" onClick={() => handleEdit(data)} disabled={user.email !== data.user}>
+              Edit
+            </Button>
             <Button>Delete</Button>
           </CardFooter>
         </Card>
