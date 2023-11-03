@@ -66,7 +66,7 @@ const EditBook = () => {
             autoCapitalize="none"
             autoComplete="title"
             autoCorrect="off"
-            defaultValue={data.title}
+            defaultValue={data?.title}
             disabled={isLoading}
             required
           />
@@ -78,7 +78,7 @@ const EditBook = () => {
             type="text"
             autoCapitalize="none"
             autoComplete="author"
-            defaultValue={data.author}
+            defaultValue={data?.author}
             disabled={isLoading}
             required
           />
@@ -90,7 +90,7 @@ const EditBook = () => {
             type="text"
             autoCapitalize="none"
             autoComplete="genre"
-            defaultValue={data.genre}
+            defaultValue={data?.genre}
             disabled={isLoading}
             required
           />
@@ -102,12 +102,12 @@ const EditBook = () => {
             type="text"
             autoCapitalize="none"
             autoComplete="publicationDate"
-            defaultValue={data.publicationDate}
+            defaultValue={data?.publicationDate}
             disabled={isLoading}
             required
           />
         </div>
-        <Button className="w-full" disabled={isLoading || user.email !== data.user}>
+        <Button className="w-full" disabled={isLoading || user.email !== data?.user}>
           Edit Book
         </Button>
       </form>
