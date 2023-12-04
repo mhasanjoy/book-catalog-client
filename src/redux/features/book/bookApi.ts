@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@/redux/api/apiSlice";
 
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query({
-      query: ({ search }) => {
-        return { url: "/books", params: { search } };
+      query: (arg) => {
+        return { url: "/books", params: { ...arg } };
       },
     }),
     getTenRecentlyAddedBooks: builder.query({
