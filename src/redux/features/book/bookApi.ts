@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { api } from "@/redux/api/apiSlice";
 
 const bookApi = api.injectEndpoints({
@@ -34,6 +33,18 @@ const bookApi = api.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    addReview: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `/reviews/${id}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["reviews"],
+    }),
+    getReview: builder.query({
+      query: (id) => `/reviews/${id}`,
+      providesTags: ["reviews"],
+    }),
   }),
 });
 
@@ -44,4 +55,6 @@ export const {
   useAddNewBookMutation,
   useUpdateBookInformationMutation,
   useDeleteBookMutation,
+  useAddReviewMutation,
+  useGetReviewQuery,
 } = bookApi;

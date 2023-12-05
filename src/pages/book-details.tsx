@@ -1,3 +1,4 @@
+import BookReview from "@/components/BookReview";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -92,6 +93,8 @@ const BookDetails = () => {
           </CardFooter>
         </Card>
       </div>
+
+      <BookReview id={id!} />
     </div>
   );
 };
