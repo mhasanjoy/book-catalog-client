@@ -5,6 +5,7 @@ import EditBook from "@/pages/edit-book";
 import Home from "@/pages/home";
 import SignIn from "@/pages/sign-in";
 import SignUp from "@/pages/sign-up";
+import Wishlist from "@/pages/wishlist";
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/main";
 import ErrorPage from "../pages/error";
@@ -36,7 +37,6 @@ const router = createBrowserRouter([
         path: "/books/:id",
         element: <BookDetails />,
       },
-
       {
         path: "/add-new-book",
         element: (
@@ -46,12 +46,16 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "books/:id/edit-book",
+        path: "/books/:id/edit-book",
         element: (
           <PrivateRoute>
             <EditBook />,
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/wishlist",
+        element: <Wishlist />,
       },
     ],
   },

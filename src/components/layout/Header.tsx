@@ -50,6 +50,11 @@ const Header = () => {
           {user.email ? (
             <>
               <li>
+                <Button variant="link" asChild>
+                  <Link to="/wishlist">Wishlist</Link>
+                </Button>
+              </li>
+              <li>
                 <Button variant="link" onClick={handleSignOut}>
                   Sign Out
                 </Button>

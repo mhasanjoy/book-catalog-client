@@ -14,7 +14,21 @@ const userApi = api.injectEndpoints({
       query: ({ email, bookId }) => `/users/${email}/status/${bookId}`,
       providesTags: ["wishlist"],
     }),
+    getWishlist: builder.query({
+      query: (email) => `/users/${email}/wishlist`,
+    }),
+    removeBookFromWishlist: builder.mutation({
+      query: ({ email, bookId }) => ({
+        url: `/users/${email}/wishlist/${bookId}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useAddWishlistMutation, useGetBookStatusQuery } = userApi;
+export const {
+  useAddWishlistMutation,
+  useGetBookStatusQuery,
+  useGetWishlistQuery,
+  useRemoveBookFromWishlistMutation,
+} = userApi;
