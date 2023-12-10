@@ -60,13 +60,13 @@ const Books = () => {
 
   return (
     <div className="min-h-[calc(100vh-6rem)] px-20">
-      <h1 className="text-center pt-10 font-semibold text-xl">List of all books</h1>
+      <h1 className="text-center py-10 font-semibold text-xl">List of All Books</h1>
 
       <div>
         <form onSubmit={handleSubmit} className="flex justify-end">
           <Select onValueChange={(event) => setGenre(event)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a genre" />
+              <SelectValue placeholder="Genre" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -80,8 +80,8 @@ const Books = () => {
           </Select>
 
           <Select onValueChange={(event) => setPublicationYear(event)}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a publication year" />
+            <SelectTrigger className="w-[180px] mx-2">
+              <SelectValue placeholder="Publication Year" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -101,8 +101,8 @@ const Books = () => {
             autoComplete="search"
             autoCorrect="off"
             disabled={isLoading}
-            className="w-1/5"
-            placeholder="Search by title, author or genre"
+            className="w-1/5 mr-2"
+            placeholder="Search by Title, Author or Genre"
           />
           <Button disabled={isLoading}>Search</Button>
         </form>

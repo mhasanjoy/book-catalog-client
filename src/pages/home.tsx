@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div className="min-h-[calc(100vh-6rem)] px-20">
-      <h1 className="text-center pt-10 font-semibold text-xl">10 recently added books</h1>
+      <h1 className="text-center pt-10 font-semibold text-xl">Recently Added Books</h1>
       <Table className="my-10">
         <TableHeader>
           <TableRow>

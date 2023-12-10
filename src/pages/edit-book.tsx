@@ -108,7 +108,7 @@ const EditBook = () => {
           />
         </div>
         <Button className="w-full" disabled={isLoading || user.email !== data?.user}>
-          Edit Book
+          Submit
         </Button>
       </form>
     </div>

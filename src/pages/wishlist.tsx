@@ -2,7 +2,7 @@ import WishlistTable from "@/components/WishlistTable";
 import { useGetWishlistQuery } from "@/redux/features/user/userApi";
 import { useAppSelector } from "@/redux/types";
 import { IBook } from "@/types/book";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface IWishlist {
   book: IBook;
@@ -17,25 +17,32 @@ const Wishlist = () => {
   const [completedList, setCompletedList] = useState<IWishlist[]>([]);
   const [planToReadList, setPlanToReadList] = useState<IWishlist[]>([]);
 
+  const read = useRef<IWishlist[]>([]);
+  const complete = useRef<IWishlist[]>([]);
+  const plan = useRef<IWishlist[]>([]);
+
   useEffect(() => {
     data?.wishlist.forEach((list: IWishlist) => {
       if (list.status === "Reading") {
-        const isExists = readingList.find((bookList) => bookList.book._id === list.book._id);
+        const isExists = read.current.find((bookList) => bookList.book._id === list.book._id);
 
         if (!isExists) {
-          setReadingList([...readingList, list]);
+          read.current = [...read.current, list];
+          setReadingList(read.current);
         }
       } else if (list.status === "Completed") {
-        const isExists = completedList.find((bookList) => bookList.book._id === list.book._id);
+        const isExists = complete.current.find((bookList) => bookList.book._id === list.book._id);
 
         if (!isExists) {
-          setCompletedList([...completedList, list]);
+          complete.current = [...complete.current, list];
+          setCompletedList(complete.current);
         }
       } else if (list.status === "Plan to Read") {
-        const isExists = planToReadList.find((bookList) => bookList.book._id === list.book._id);
+        const isExists = plan.current.find((bookList) => bookList.book._id === list.book._id);
 
         if (!isExists) {
-          setPlanToReadList([...planToReadList, list]);
+          plan.current = [...plan.current, list];
+          setPlanToReadList(plan.current);
         }
       }
     });

@@ -106,7 +106,7 @@ const AddNewBook = () => {
             />
           </div>
           <Button disabled={isLoading} className="w-full">
-            Add New Book
+            Submit
           </Button>
         </form>
       </div>

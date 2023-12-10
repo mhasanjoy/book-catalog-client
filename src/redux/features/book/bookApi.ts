@@ -6,12 +6,15 @@ const bookApi = api.injectEndpoints({
       query: (arg) => {
         return { url: "/books", params: { ...arg } };
       },
+      providesTags: ["books"],
     }),
     getTenRecentlyAddedBooks: builder.query({
       query: () => "/recently-added-books",
+      providesTags: ["books"],
     }),
     getSingleBook: builder.query({
       query: (id) => `/books/${id}`,
+      providesTags: ["books"],
     }),
     addNewBook: builder.mutation({
       query: ({ data }) => ({
@@ -19,6 +22,7 @@ const bookApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["books"],
     }),
     updateBookInformation: builder.mutation({
       query: ({ id, data }) => ({
@@ -26,12 +30,14 @@ const bookApi = api.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags: ["books"],
     }),
     deleteBook: builder.mutation({
       query: (id) => ({
         url: `/books/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["books"],
     }),
     addReview: builder.mutation({
       query: ({ id, data }) => ({
