@@ -10,7 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
 import { IWishlist } from "@/pages/wishlist";
 import { useRemoveBookFromWishlistMutation } from "@/redux/features/user/userApi";
 import { useAppSelector } from "@/redux/types";
@@ -18,10 +18,10 @@ import { IBook } from "@/types/book";
 import { useToast } from "./ui/use-toast";
 
 interface IProps {
-  wishlist: IWishlist[];
+  wishlist: IWishlist;
 }
 
-const WishlistTable = (props: IProps) => {
+const WishlistTable = ({ wishlist }: IProps) => {
   const [removeBookFromWishlist, { isLoading }] = useRemoveBookFromWishlistMutation();
   const { toast } = useToast();
   const { email } = useAppSelector((state) => state.user.user);
@@ -45,47 +45,31 @@ const WishlistTable = (props: IProps) => {
 
   return (
     <>
-      {!!props.wishlist.length && (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Author</TableHead>
-              <TableHead>Genre</TableHead>
-              <TableHead className="text-right">Tags</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {props.wishlist.map((list) => (
-              <TableRow key={list.book._id}>
-                <TableCell className="font-medium">{list.book.title}</TableCell>
-                <TableCell>{list.book.author}</TableCell>
-                <TableCell>{list.book.genre}</TableCell>
-                <TableCell className="text-right">
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button disabled={isLoading}>Remove</Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently remove status information about this
-                          book.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleRemove(list.book)}>Continue</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
+      <TableRow>
+        <TableCell className="font-medium">{wishlist.book.title}</TableCell>
+        <TableCell>{wishlist.book.author}</TableCell>
+        <TableCell>{wishlist.book.genre}</TableCell>
+        <TableCell>{wishlist.status}</TableCell>
+        <TableCell className="text-right">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button disabled={isLoading}>Remove</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently remove status information about this book.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction onClick={() => handleRemove(wishlist.book)}>Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </TableCell>
+      </TableRow>
     </>
   );
 };

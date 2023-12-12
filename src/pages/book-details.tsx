@@ -106,23 +106,25 @@ const BookDetails = () => {
             <p>Genre: {data?.genre}</p>
             <p>Publication Date: {data?.publicationDate}</p>
 
-            <div className="flex items-center my-2">
-              <p className="mr-4">Status: </p>
-              <Select onValueChange={(event) => handleWishlist(event)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder={status || `Add to List`} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {statusList.map((status, index) => (
-                      <SelectItem key={index} value={status}>
-                        {status}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
+            {user.email && (
+              <div className="flex items-center my-2">
+                <p className="mr-4">Status: </p>
+                <Select onValueChange={(event) => handleWishlist(event)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder={status || `Add to List`} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {statusList.map((status, index) => (
+                        <SelectItem key={index} value={status}>
+                          {status}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </CardContent>
 
           <CardFooter className="flex justify-between">
